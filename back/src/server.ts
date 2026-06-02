@@ -1,0 +1,22 @@
+import express from "express";
+import cors from "cors";
+import mealRouter from "./routes/meal.routes";
+import authRouter from "./routes/auth.routes";
+import goalRouter from "./routes/goal.routes";
+import waterRouter from "./routes/water.routes";
+
+const server = express();
+
+server.use(cors());
+server.use(express.json());
+
+server.use("/auth", authRouter);
+server.use("/meals", mealRouter);
+server.use("/goals", goalRouter);
+server.use("/water", waterRouter);
+
+server.get("/", (req, res) => {
+  res.send("API funcionando 🚀");
+});
+
+export default server;
