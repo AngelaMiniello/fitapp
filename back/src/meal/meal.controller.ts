@@ -213,23 +213,14 @@ export const updateMeal = async ( req: Request, res: Response ) => {
 
     const quantity = Number(req.body.quantity);
 
-meal.calories =
-  (meal.baseCalories * quantity) / 100;
+    meal.calories = (meal.baseCalories * quantity) / 100;
+    meal.protein = (meal.baseProtein * quantity) / 100;
+    meal.carbs = (meal.baseCarbs * quantity) / 100;
+    meal.fat = (meal.baseFat * quantity) / 100;
 
-meal.protein =
-  (meal.baseProtein * quantity) / 100;
-
-meal.carbs =
-  (meal.baseCarbs * quantity) / 100;
-
-meal.fat =
-  (meal.baseFat * quantity) / 100;
-
-    const updatedMeal =
-      await mealRepository.save(meal);
+    const updatedMeal = await mealRepository.save(meal);
 
     return res.json(updatedMeal);
-
 
   } catch(error){
 

@@ -1,10 +1,5 @@
 import { Router } from "express";
-
-import {
-  getGoals,
-  updateGoals,
-} from "../goal/goal.controller";
-
+import { getGoals, updateGoals,} from "../goal/goal.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();

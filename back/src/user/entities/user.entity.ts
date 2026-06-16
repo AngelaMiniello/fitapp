@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { Meal } from "../../meal/entities/meal.entity";
 import { Goal } from "../../goal/entities/goal.entity";
+import { Exercise } from "../../exercise/entities/exercise.entity";
 
 @Entity()
 export class User {
@@ -27,4 +28,7 @@ export class User {
 
   @OneToOne(() => Goal, (goal) => goal.user)
   goal!: Goal;
+
+  @OneToMany(() => Exercise, (exercise) => exercise.user)
+  exercises!: Exercise[];
 }
