@@ -56,25 +56,17 @@ export default function MealModal({
           />
 
           <div className="mt-4">
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => { const value = e.target.value;
+                setQuantity(value === "" ? "" : Number(value));
+              }}
+              className="w-full p-4 text-white border rounded-2xl bg-zinc-800 border-zinc-700"
+            />
 
-  
-
-  <input
-    type="number"
-    value={quantity}
-    onChange={(e) => {
-
-  const value = e.target.value;
-
-  setQuantity(value === "" ? "" : Number(value));
-
-}}
-    className="w-full p-4 text-white border rounded-2xl bg-zinc-800 border-zinc-700"
-  />
-  <p className="mt-1 ml-2 text-sm text-zinc-400">
-    Quantity (g)
-  </p>
-</div>
+           <p className="mt-1 ml-2 text-sm text-zinc-400"> Quantity (g) </p>
+          </div>
 
           {/* si no recibe mealType de Diary aparece el Select */}
           {!mealType && (
@@ -105,7 +97,7 @@ export default function MealModal({
                   food={food}
                   onFoodAdded={onSuccess}
                   mealType={selectedMealType}
-                  quantity={quantity}
+                  quantity={Number(quantity) || 0}
                 />
             ))}
           </div>

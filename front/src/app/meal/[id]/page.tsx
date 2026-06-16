@@ -1,5 +1,5 @@
-import MealDetailPage from "../../../views/MealDetail";
+import MealDetailView from "../../../views/MealDetailView";
 
-export default function Dashboard() {
-  return <MealDetailPage/>;
+export default function MealDetailPage() {
+  return <MealDetailView/>;
 }

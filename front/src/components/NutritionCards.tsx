@@ -1,73 +1,56 @@
 "use client";
 
-import {
-  Flame,
-  Beef,
-  Wheat,
-  Droplets,
-} from "lucide-react";
+import { Flame, Beef, Wheat, Droplets, Icon, Cuboid } from "lucide-react";
+import { useGoals } from "../context/GoalsContext";
+import { useDailyProgress } from "../context/DailyProgress";
 
 export default function NutritionCards() {
-  const userGoals = {
-    calories: 1800,
-    protein: 140,
-    carbs: 180,
-    fat: 60,
-  };
 
-  const totals = {
-    calories: 1240,
-    protein: 90,
-    carbs: 110,
-    fat: 40,
-  };
+  const { goals } = useGoals();
+  const { dailyProgress } = useDailyProgress();
+  
+  if (!goals || !dailyProgress) {
+    return null;
+  }
 
   const macros = [
     {
       label: "Proteínas",
-      value: totals.protein,
-      goal: userGoals.protein,
-      icon: <Beef size={18} />,
+      value: dailyProgress?.protein ?? 0,
+      goal: goals?.proteinGoal ?? 0,
+      icon: Beef,
     },
     {
       label: "Carbohidratos",
-      value: totals.carbs,
-      goal: userGoals.carbs,
-      icon: <Wheat size={18} />,
+      value: dailyProgress.carbs ?? 0,
+      goal: goals?.carbsGoal ?? 0,
+      icon: Wheat
     },
     {
       label: "Grasas",
-      value: totals.fat,
-      goal: userGoals.fat,
-      icon: <Droplets size={18} />,
+      value: dailyProgress.fat ?? 0,
+      goal: goals?.fatGoal ?? 0,
+      icon: Cuboid
     },
   ];
 
   const caloriesLeft =
-    userGoals.calories - totals.calories;
-
+    (goals?.dailyCalories ?? 0) -
+    (dailyProgress?.caloriesConsumed ?? 0);
+  
   return (
     <div className="flex gap-4 p-3 pb-2 overflow-x-auto snap-x snap-mandatory">
-      {/* CARD CALORIAS */}
+      {/*  CALORIES CARD*/}
       <div className="min-w-full p-5 text-white shadow-lg snap-center rounded-3xl bg-zinc-900">
-        <h2 className="text-xl font-semibold">
-          Calorías
-        </h2>
+        <h2 className="text-xl font-semibold"> Calories </h2>
 
-        <p className="mt-1 text-sm text-zinc-400">
-          Restantes = Objetivo - Consumidas
-        </p>
+        <p className="mt-1 text-sm text-zinc-400">  Calories left = Goal - Consumed </p>
 
         <div className="flex items-center justify-center mt-6">
           <div className="relative flex h-52 w-52 items-center justify-center rounded-full border-[12px] border-zinc-700">
             <div className="text-center">
-              <p className="text-5xl font-bold">
-                {caloriesLeft}
-              </p>
-
-              <p className="text-zinc-400">
-                restantes
-              </p>
+              <p className="text-5xl font-bold"> {caloriesLeft} </p>
+              <p className="text-zinc-400"> left </p>
             </div>
           </div>
         </div>
@@ -76,50 +59,37 @@ export default function NutritionCards() {
           <div className="flex items-center gap-2">
             <Flame className="text-[#F2B47E]" />
             <div>
-              <p className="text-zinc-400">
-                Consumidas
-              </p>
-
-              <p className="font-semibold">
-                {totals.calories}
-              </p>
+              <p className="text-zinc-400">  Consumed</p>
+              <p className="font-semibold">  {dailyProgress.caloriesConsumed} </p>
             </div>
           </div>
 
           <div>
-            <p className="text-zinc-400">
-              Objetivo
-            </p>
-
-            <p className="font-semibold">
-              {userGoals.calories}
-            </p>
+            <p className="text-zinc-400"> Goal </p>
+            <p className="font-semibold"> {goals?.dailyCalories} </p>
           </div>
         </div>
       </div>
 
-      {/* CARD MACROS */}
+      {/* MACROS CARD*/}
       <div className="min-w-full p-5 text-white shadow-lg snap-center rounded-3xl bg-zinc-900">
-        <h2 className="text-xl font-semibold">
-          Macros
-        </h2>
+        <h2 className="text-xl font-semibold"> Macros </h2>
 
-        <p className="mt-1 text-sm text-zinc-400">
-          Seguimiento diario de macronutrientes
-        </p>
+        <p className="mt-1 text-sm text-zinc-400">  Seguimiento diario de macronutrientes </p>
 
         <div className="mt-6 space-y-5">
           {macros.map((macro) => {
-            const percentage = Math.min(
-              (macro.value / macro.goal) * 100,
-              100
-            );
+            const Icon = macro.icon;
+
+            const percentage = macro.goal
+              ? Math.min((macro.value / macro.goal) * 100, 100)
+              : 0;
 
             return (
               <div key={macro.label}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    {macro.icon}
+                    <Icon size={18} />
 
                     <span className="font-medium">
                       {macro.label}
