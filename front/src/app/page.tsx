@@ -1,11 +1,9 @@
-import NutritionCards from "../components/NutritionCards";
-import HealthOverview from "../components/HealthOverview";
+import RegisterOptionsView from "../views/RegisterOptionsView";
 
-export default function Home() {
+export default function RegisterOptionsPage() {
   return(
     <section className="w-full">
-      <NutritionCards/>
-      <HealthOverview/>
+      <RegisterOptionsView/>
     </section>
   );
 }
