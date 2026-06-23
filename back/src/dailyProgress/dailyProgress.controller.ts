@@ -10,22 +10,14 @@ interface AuthRequest extends Request {
   user?: User;
 }
 
-export const getDailyProgress = async (
-  req: AuthRequest,
-  res: Response
-) => {
+export const getDailyProgress = async ( req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
 
-    const mealRepository =
-      AppDataSource.getRepository(Meal);
-
-    const exerciseRepository =
-      AppDataSource.getRepository(Exercise);
-
-    const waterRepository =
-      AppDataSource.getRepository(WaterEntry);
-
+    const mealRepository = AppDataSource.getRepository(Meal);
+    const exerciseRepository = AppDataSource.getRepository(Exercise);
+    const waterRepository = AppDataSource.getRepository(WaterEntry);
+    
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
